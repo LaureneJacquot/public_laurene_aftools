@@ -57,7 +57,8 @@ There is an exports.sh file in interpro_batch_analyzer : you can modify it and t
 ```
 source exports.sh
 ```
-You also need to make sure that you are passing an INTERPRO_COOKIES value in order to run the code. One is provided in exports.sh by default, however it might expire at some point. to find this cookie, you can go to DevTools.
+You also need to make sure that you are passing an INTERPRO_COOKIES value in order to run the code. One is provided in exports.sh by default, however it might expire at some point. To find your own cookie, you can go to DevTools.
+
 
 
 
