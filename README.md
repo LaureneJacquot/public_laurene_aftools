@@ -1,23 +1,63 @@
-This is a repository for some of the tools I developed in Oxford. It is in ACTIVE development, however feel free to clone it and to use it / fix issues if you see them !
+# Oxford Bioinformatics Tools
 
-For interpro_batch_analyzer : 
-- To use this tool, you need to change the interpro_batch_analyzer/exports.sh file and to source it, in order to indicate the correct place for the code to run / save results to.
-- Make sure you have the correct packages :
+Tools developed in my first year of master's at PSL, during my internship at the University of Oxford.
+
+## InterPro Batch Analyzer
+
+A Python tool for high-throughput protein functional analysis using the InterPro API. Automates submission, monitoring, and results retrieval for large protein datasets.
+
+### Features
+- Concurrent processing of multiple protein sequences
+- Automated job status monitoring and result retrieval
+- Configurable analysis parameters (signal peptides, transmembrane domains, etc.)
+- Comprehensive logging and error handling
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/LaureneJacquot/public_laurene_aftools.git
+cd public_laurene_aftools/interpro_batch_analyzer
 ```
-pip install requirements.txt
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+3. Export your variables:
+```bash
+export WORKPLACE=/path/to/your/workspace
+export INTERPRO_RESULTS_DIR=/path/to/results
+```
+Usage :
+1. Full pipeline : 
+```
+python main.py pipeline -f your_proteins.fasta
+```
+and with custom keywords : 
+```
+python main.py pipeline -f your_proteins.fasta -k ['KEYWORD_1', 'KEYWORD_2', 'KEYWORD_3']
+```
+2. Step-by-step :
+```
+python main.py pipeline -f your_proteins.fasta -k ['KEYWORD_1', 'KEYWORD_2', 'KEYWORD_3']
+python main.py autorefresh
+python main.py analysisall
+python main.py summary #Optional
+python main.py write #Optional
 ```
 
-- You can run the test by setting INTERPRO_RESULTS_DIR to [somewhere]/public_laurene_aftools/interpro_batch_analyzer/test/results (and creating that 'results' directory yourself since it is not included here). Then you can run :
-
+Test example : 
+in interpro_batch_analyzer :
 ```
-python $TOOLS/main.py pipeline -f test.fasta 
+mkdir -p test/results
+export INTERPRO_RESULTS_DIR=$(pwd)/test/results
+python main.py pipeline -f test.fasta
 ```
-which should analyze 16 proteins from Uniprot by parsing them for a signal peptide flag (signal peptide parsing is hardcoded default).
-
-- If you have a fasta of the protein(s) you are interested in, you can either run all the pipeline, or you can do it in differents steps (see main.py for the flags)
-- If you want to scan the proteins for other information than signal peptides, you can include that in the command line with the -k argument (pass the keywords you want to parse for as a list of strings, such as ['SIGNAL_PEPTIDE', 'TMHelix', 'NON_CYTOPLASMIC_DOMAINS'] ). You NEED to be sure that these exact same strings are going to show up in the Interpro output files (for example, do not pass 'TMhelix' instead of 'TMHelix' as the tool will then miss the information). 
-
-
+There is an exports.sh file in interpro_batch_analyzer : you can modify it and then just source at the start of every shell session (or add it to your PATH)
+```
+source exports.sh
+```
+You also need to make sure that you are passing an INTERPRO_COOKIES value in order to run the code. One is provided in exports.sh by default, however it might expire at some point. to find this cookie, you can go to DevTools.
 
 
 
