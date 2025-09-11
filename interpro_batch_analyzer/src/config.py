@@ -5,9 +5,13 @@ if "WORKPLACE" not in os.environ:
     raise Exception("WORKPLACE not set. Please specify a folder to work in.")
 if "INTERPRO_RESULTS_DIR" not in os.environ:
     raise Exception("INTERPRO_RESULTS_DIR not set. Please specify a folder to access for Interpro results.")
+if not "INTERPRO_COOKIES" in os.environ: 
+    raise Exception("INTERPRO_COOKIES not set. Please specify a cookie to access Interpro.")
+
 
 WORKPLACE = os.environ['WORKPLACE']
 INTERPRO_RESULTS_DIR = os.environ['INTERPRO_RESULTS_DIR']
+INTERPRO_COOKIES = os.environ.get('INTERPRO_COOKIES', '')
 
 
 class my_colors : 
@@ -15,7 +19,7 @@ class my_colors :
     OKBLUE = "\033[94m"
     OKCYAN = "\033[38;5;140m"
     OKGREEN = "\033[38;5;121m"
-    WARNING = "\033[93m"
+    WARNING = "\033[94m" #change this back to 93 
     FAIL = "\033[38;5;198m"
     ENDC = "\033[0m"
     BOLD = "\033[1m"

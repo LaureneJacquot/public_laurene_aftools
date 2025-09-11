@@ -6,7 +6,7 @@ import os
 from typing import List, Optional
 from dataclasses import dataclass
 
-from .config import WORKPLACE , INTERPRO_RESULTS_DIR , display
+from .config import WORKPLACE , INTERPRO_RESULTS_DIR , INTERPRO_COOKIES, display
 
 
 @dataclass
@@ -48,6 +48,8 @@ class InterproClient :
 
         
         cookie_string = '_ga_11XLYWT8G7=GS2.3.s1747653692$o1$g0$t1747653692$j0$l0$h0; embl-ebi-public-website-v1.0-data-protection-accepted=true; _ga=GA1.1.1874504441.1744713762; _ga_F8566CJNX5=GS2.1.s1748956976$o2$g0$t1748956976$j60$l0$h0; _ga_LMNK5MEQ4Z=GS2.1.s1750345118$o12$g0$t1750345118$j60$l0$h0; _hjSessionUser_4953782=eyJpZCI6ImQ5MzhmMTEyLTQ5NGUtNTFiYS04ZTFkLWJiMjZjMWVlNGZmNSIsImNyZWF0ZWQiOjE3NDQ3MTM3NjA4NjMsImV4aXN0aW5nIjp0cnVlfQ==; _clck=qiw7uk%7C2%7Cfx3%7C0%7C1996; _ga_RPJQZYPKWN=GS2.1.s1750924706$o5$g1$t1750924903$j60$l0$h0; _ga_JD9QTGRJ05=GS2.1.s1751564761$o5$g1$t1751565255$j59$l0$h0'
+        #cookie_string = INTERPRO_COOKIES
+
 
         self.cookies = dict(
             item.strip().split("=", 1)
@@ -93,6 +95,10 @@ class InterproClient :
         return response.text
     
     def batch_submits(self, d) : 
+        display.info(f"Starting batch submit with {len(d)} proteins:")
+        for title in sorted(d.keys()):  
+            display.info(f"  - {title}")
+
         infos = {}
         batch_size = self.batch_size 
 
@@ -115,6 +121,7 @@ class InterproClient :
             return dictionnary
         
         dictionnary = splits_d_into_dictionnary(d)
+
         p = Path(WORKPLACE) / 'dictionnary.txt'
         with open(p, 'w') as p : 
             json.dump(dictionnary, p, indent=2)
@@ -205,7 +212,8 @@ class InterproClient :
             with open(self.log_path, 'r') as log : 
                 data = json.load(log)
                 for item in data['list'] : 
-                    if item['status'] == 'RUNNING' or item['status'] == 'QUEUED': finished = False
+                    if item['status'] not in ['FINISHED', 'FAILED', 'ERROR']:
+                        finished = False
             if finished == False : display.error(f'Finished : {finished}')
             elif finished == True : display.ok(f'Finished : {finished}')
 
@@ -219,31 +227,38 @@ class InterproClient :
                 display.info('\nSleeping for 10 more seconds\n')
                 time.sleep(10)
 
-
-    def writes_interpro_log(self, infos) : 
-        #format of infos should be title : [sequence, id]
-        with open(self.log_path, 'r+') as log : 
-            all = json.load(log)
-
-        for title in infos : 
-            if len(title.split('|')) > 1 : title = title.split('|')[1]
-            sequence = infos[title][0]
-            id = infos[title][1]
-            if id is None : 
-                display.warning(f'Skipping {title} : submission failed')
-                continue 
-            new = {
-                'title' : title, 
-                'status' : 'RUNNING' , 
-                'id' : id, 
-                'sequence' : sequence , 
-                'analysis' : {}
-            }
-            all['list'].append(new)
+    def writes_interpro_log(self, infos):
+    # Format of infos should be title : [sequence, id]
+        with open(self.log_path, 'r+') as log:
+            all_data = json.load(log)
         
-        with open(self.log_path, 'r+') as log : 
-            log.seek(0)
-            json.dump(all, log, indent=2)
+        existing_titles = {item['title'] for item in all_data['list']}
+        
+        for original_title in infos:
+            clean_title = original_title.split('|')[1] if '|' in original_title else original_title
+            
+            if clean_title in existing_titles:
+                display.warning(f"Duplicate submission detected: {clean_title}")
+                continue
+            
+            sequence = infos[original_title][0]
+            job_id = infos[original_title][1]
+            
+            if job_id is None:
+                display.warning(f'Skipping {clean_title}: submission failed')
+                continue
+            
+            new = {
+                'title': clean_title,
+                'status': 'RUNNING',
+                'id': job_id,
+                'sequence': sequence,
+                'analysis': {}
+            }
+            all_data['list'].append(new)
+        
+        with open(self.log_path, 'w') as log:
+            json.dump(all_data, log, indent=2)
 
 
     def updates_data(self) : 
