@@ -4,7 +4,7 @@ Tools made in my first year of master's at PSL, during my internship at the Univ
 
 ## InterPro Batch Analyzer
 
-This is a Python tool to analyse protein data using the InterPro API. Automates submission, monitoring, and results retrieval for large protein datasets.
+This is a Python tool to analyse protein data using the InterPro API. It automates submission, monitoring, and results retrieval for large protein datasets.
 
 ### Features
 - Concurrent processing of multiple protein sequences
@@ -63,7 +63,7 @@ You also need to make sure that you are passing an INTERPRO_COOKIES value in ord
 
 ## NCBI BLAST Submission and UniProt Data Retrieval Tools
 
-A set of Python tools for automating BLAST queries against the NCBI database and retrieving protein information from UniProt. Developed by Laurène in Prof. Doye's group at Oxford.
+This is a set of Python tools for automating BLAST queries against the NCBI database and retrieving protein information from UniProt. 
 
 ### Features
 
@@ -155,6 +155,7 @@ protein3: MKKLLAAATTVVGGHHII...
 - Results saved as XML files in the configured results directory
 - Filename format: `{job_id}.xml`
 - Compatible with BioPython BLAST parsers
+
 
 
 
