@@ -49,7 +49,8 @@ Test example :
 in interpro_batch_analyzer :
 ```
 mkdir -p test/results
-export INTERPRO_RESULTS_DIR=$(pwd)/test/results
+export INTERPRO_RESULTS_DIR="$(pwd)/test/results"
+export WORKPLACE="$(pwd)/test"
 python main.py pipeline -f test.fasta
 ```
 There is an exports.sh file in interpro_batch_analyzer : you can modify it and then just source at the start of every shell session (or add the content to your PATH)
@@ -155,6 +156,7 @@ protein3: MKKLLAAATTVVGGHHII...
 - Results saved as XML files in the configured results directory
 - Filename format: `{job_id}.xml`
 - Compatible with BioPython BLAST parsers
+
 
 
 
