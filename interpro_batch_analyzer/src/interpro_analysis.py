@@ -107,7 +107,7 @@ class InterproAnalyzer:
                 else : title = item['title']
                 titles.append(title)
 
-        with ThreadPoolExecutor(max_workers=1) as executor:
+        with ThreadPoolExecutor(max_workers=20) as executor:
             futures = {executor.submit(self.analysis, title, mode): title 
                     for title in titles}
             for future in as_completed(futures) : 
