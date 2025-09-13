@@ -4,13 +4,12 @@ Tools made in my first year of master's at PSL, during my internship at the Univ
 
 ## InterPro Batch Analyzer
 
-A Python tool for high-throughput protein functional analysis using the InterPro API. Automates submission, monitoring, and results retrieval for large protein datasets.
+This is a Python tool to analyse protein data using the InterPro API. Automates submission, monitoring, and results retrieval for large protein datasets.
 
 ### Features
 - Concurrent processing of multiple protein sequences
 - Automated job status monitoring and result retrieval
 - Configurable analysis parameters (signal peptides, transmembrane domains, etc.)
-- Comprehensive logging and error handling
 
 ### Installation
 
@@ -53,7 +52,7 @@ mkdir -p test/results
 export INTERPRO_RESULTS_DIR=$(pwd)/test/results
 python main.py pipeline -f test.fasta
 ```
-There is an exports.sh file in interpro_batch_analyzer : you can modify it and then just source at the start of every shell session (or add it to your PATH)
+There is an exports.sh file in interpro_batch_analyzer : you can modify it and then just source at the start of every shell session (or add the content to your PATH)
 ```
 source exports.sh
 ```
@@ -62,43 +61,43 @@ You also need to make sure that you are passing an INTERPRO_COOKIES value in ord
 
 
 
-# NCBI BLAST Submission and UniProt Data Retrieval Tools
+## NCBI BLAST Submission and UniProt Data Retrieval Tools
 
 A set of Python tools for automating BLAST queries against the NCBI database and retrieving protein information from UniProt. Developed by Laurène in Prof. Doye's group at Oxford.
 
-## Features
+### Features
 
-### BLAST Submission Tool (`blast_client.py`)
+#### BLAST Submission Tool (`blast_client.py`)
 - Submit single or batch BLAST queries to NCBI
 - Support for UniProt ID lookup or direct sequence input
 - Automatic result caching to avoid duplicate submissions
 - Configurable delays between batch submissions
 - Robust error handling and logging
 
-### UniProt Data Retrieval (`uniprot.py`)
+#### UniProt Data Retrieval (`uniprot.py`)
 - Fetch protein information from UniProt REST API
 - Batch processing with concurrent requests
 - Extract protein names, sequences, and lengths
 - SSL error handling with fallback mechanisms
 - Filter proteins by name patterns
 
-## Requirements
+### Requirements
 
 ```bash
 pip install biopython requests urllib3
 ```
 
-## Setup
+### Setup
 1. Ensure the results directory exists:
 ```bash
 mkdir -p /path/to/blast/results
 ```
 
-## Usage
+### Usage
 
-### BLAST Submission Tool
+#### BLAST Submission Tool
 
-#### Single Query Mode
+##### Single Query Mode
 
 **Using UniProt ID:**
 ```bash
@@ -110,7 +109,7 @@ python blast_client.py single --id P12345
 python blast_client.py single --sequence "MKLLVVGVGVGVGVG..." --name "my_protein"
 ```
 
-#### Batch Mode
+##### Batch Mode
 
 **Using UniProt ID file:**
 ```bash
@@ -122,7 +121,7 @@ python blast_client.py batch --id_file uniprot_ids.txt
 python blast_client.py batch --seq_file sequences.txt
 ```
 
-#### Command Line Options
+##### Command Line Options
 
 - `--rewrite`: Reprocess existing results (default: skip existing)
 - `--delay`: Delay between batch submissions in seconds (default: 5)
@@ -132,9 +131,9 @@ python blast_client.py batch --seq_file sequences.txt
 - `--id_file`: File containing UniProt IDs for batch mode
 - `--seq_file`: File containing sequences for batch mode
 
-### File Formats
+#### File Formats
 
-#### UniProt ID File (`uniprot_ids.txt`)
+##### UniProt ID File (`uniprot_ids.txt`)
 ```
 P12345
 Q67890
@@ -142,7 +141,7 @@ A11111
 B22222
 ```
 
-#### Sequence File (`sequences.txt`)
+##### Sequence File (`sequences.txt`)
 ```
 protein1: MKLLVVGVGVGVGVGVGAAA...
 protein2: ATVKFKYKGEEKEVDISKIKK...
@@ -150,12 +149,13 @@ protein3: MKKLLAAATTVVGGHHII...
 ```
 
 
-## Output
+### Output
 
-### BLAST Results
+#### BLAST Results
 - Results saved as XML files in the configured results directory
 - Filename format: `{job_id}.xml`
 - Compatible with BioPython BLAST parsers
+
 
 
 
