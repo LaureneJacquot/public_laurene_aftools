@@ -71,15 +71,11 @@ This is a set of Python tools for automating BLAST queries against the NCBI data
 #### BLAST Submission Tool (`blast_client.py`)
 - Submit single or batch BLAST queries to NCBI
 - Support for UniProt ID lookup or direct sequence input
-- Automatic result caching to avoid duplicate submissions
-- Configurable delays between batch submissions
-- Robust error handling and logging
 
 #### UniProt Data Retrieval (`uniprot.py`)
 - Fetch protein information from UniProt REST API
 - Batch processing with concurrent requests
 - Extract protein names, sequences, and lengths
-- SSL error handling with fallback mechanisms
 - Filter proteins by name patterns
 
 ### Requirements
@@ -156,6 +152,7 @@ protein3: MKKLLAAATTVVGGHHII...
 - Results saved as XML files in the configured results directory
 - Filename format: `{job_id}.xml`
 - Compatible with BioPython BLAST parsers
+
 
 
 
