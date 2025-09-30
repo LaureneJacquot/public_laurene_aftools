@@ -1,3 +1,5 @@
+This repository is still in development - some mistakes might still exist in the README or in the codes themselves. Please signal any issue you find !
+
 # Oxford Bioinformatics Tools
 
 Tools made in my first year of master's at PSL, during my internship at the University of Oxford.
@@ -152,6 +154,7 @@ protein3: MKKLLAAATTVVGGHHII...
 - Results saved as XML files in the configured results directory
 - Filename format: `{job_id}.xml`
 - Compatible with BioPython BLAST parsers
+
 
 
 
