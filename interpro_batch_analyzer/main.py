@@ -28,7 +28,7 @@ if __name__ == '__main__' :
 
     results_dir = Path(INTERPRO_RESULTS_DIR)
     workplace = Path(WORKPLACE)
-    display.header("Toolwr for interacting with the Interpro server.\nDeveloped by Laurène in Pr. Doye's group at the University of Oxford\n")
+    display.header("Tool for interacting with the Interpro server.\nDeveloped by Laurène in Pr. Doye's group at the University of Oxford\n")
 
     parser = argparse.ArgumentParser('Script for interacting with the Interpro server')
     parser.add_argument('-s', '--sequence', default = None, help = 'a sequence you want to submit to the Interpro server')
