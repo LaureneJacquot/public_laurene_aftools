@@ -40,7 +40,7 @@ python main.py pipeline -f your_proteins.fasta -k ['KEYWORD_1', 'KEYWORD_2', 'KE
 ```
 2. Step-by-step :
 ```
-python main.py pipeline -f your_proteins.fasta -k ['KEYWORD_1', 'KEYWORD_2', 'KEYWORD_3']
+python main.py submitall -f your_proteins.fasta -k ['KEYWORD_1', 'KEYWORD_2', 'KEYWORD_3']
 python main.py autorefresh
 python main.py analysisall
 python main.py summary #Optional
@@ -154,6 +154,7 @@ protein3: MKKLLAAATTVVGGHHII...
 - Results saved as XML files in the configured results directory
 - Filename format: `{job_id}.xml`
 - Compatible with BioPython BLAST parsers
+
 
 
 
