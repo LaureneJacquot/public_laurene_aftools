@@ -2,7 +2,7 @@ This repository is still in development - some mistakes might still exist in the
 
 # Oxford Bioinformatics Tools
 
-Tools made in my first year of master's at PSL, during my internship at the University of Oxford.
+Tools made in my first year of master's at PSL, during my internship at the University of Oxford under the supervision of Prof. Jonathan Doye. Some of the features inside this repository were adapted from / inspired by existing code in the group.
 
 ## InterPro Batch Analyzer
 
@@ -154,6 +154,7 @@ protein3: MKKLLAAATTVVGGHHII...
 - Results saved as XML files in the configured results directory
 - Filename format: `{job_id}.xml`
 - Compatible with BioPython BLAST parsers
+
 
 
 
